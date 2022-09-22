@@ -1,1 +1,1 @@
-# pottedpals-backend
+# Potted Pals Backend
