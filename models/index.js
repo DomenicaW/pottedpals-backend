@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const db = mongoose.connection;
 
 mongoose
@@ -9,5 +9,5 @@ mongoose
     .catch((err) => console.log(err))
 
 module.exports = {
-    Plants: require('./Plants')
+    Plant: require('./Plants.js')
 }

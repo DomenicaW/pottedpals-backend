@@ -6,17 +6,19 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const Plants = require('./models/Plants.js');
 
+
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 
-const plantsController = require('./controllers/plantsController.js');
+const plantsRoutes = require('./routes');
 
-app.use('/plants', plantsController);
+app.use('/plants', plantsRoutes.plants)
+
 
 app.get('/', (req, res) => {
-    res.render("Hello")
+    res.send("Hello")
 });
 
 app.listen(PORT, () => {
