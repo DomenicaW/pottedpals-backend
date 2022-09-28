@@ -1,3 +1,3 @@
 module.exports = {
-    plants: require('./plants.routes')
+    plants: require('./plants.routes.js')
 }
