@@ -1,16 +1,20 @@
-const db = require('../models');
+const db = require("../models");
 
-
+// Get all the plants
 const index = (req, res) => {
-    db.Plant.find({}, (err, plants) => {
-        if(err) return res.status(404).json({error: err.message})
-        return res.status(200).json({
-            plants
-        })
-    })
-}
+  db.Plant.find({}, (err, plants) => {
+    if (err) return res.status(404).json({ error: err.message });
+    return res.status(200).json({
+      plants,
+      requestedAt: new Date().toLocaleDateString(),
+    });
+  });
+};
 
-//COMMENTED OUT ROUTE NEEDS DEBUGGING
+// Create a plant with req.body
+const create = (req, res) => {
+  db.Plant.create(req.body, (error, createdPlant) => {
+    if (error) return res.status(400).json({ error: error.message });
 
 const create = (req, res) => {
     db.Plant.create(req.body, (err, createdPlant) => {
@@ -19,33 +23,19 @@ const create = (req, res) => {
     })
 }
 
-// const destroy = (req, res) => {
-//     db.Plant.findByIdAndDelete(req.params.id, (error, deletedPlant) => {
-//         if(!deletedPlant) return res.status(400).json({error: "Plant not found"})
-//         if(error) return res.status(400).json({error: error.message})
-//         return res.status(200).json({
-//             message: `${deletedPlant.name} deleted`
-//         })
-//     })
-// }
-
-// const update = (req, res) => {
-//     db.Plant.findByIdAndUpdate(req.params.id, 
-//         {
-//             $set: req.body
-//         }, 
-//         {new: true}, 
-//         (err, updatedPlant) => {
-//             if(err) return res.status(400).json({error: err.message})
-//             return res.status(200).json(updatedPlant)
-//         }
-//     )
-// }
+// Destroy a single plant by its ID
+const destroy = (req, res) => {
+  db.Plant.findByIdAndDelete(req.params.id, (err, deletedPlant) => {
+    if (err) return res.status(400).json({ error: err.message });
+    return res.status(200).json({
+      message: `Plant ${deletedPlant.name} deleted successfully`,
+    });
+  });
+};
 
 module.exports = {
-    index,
-    show,
-    create,
-    destroy,
-    update
-}
+  index,
+  create,
+  update,
+  destroy,
+};

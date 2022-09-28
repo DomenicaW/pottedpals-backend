@@ -1,11 +1,9 @@
 require('dotenv').config();
+
+/* == EXTERNAL MODULES == */
 const express = require('express');
 const cors = require('cors');
-const app = express();
-const PORT = process.env.PORT||3000;
 const methodOverride = require('method-override');
-const mongoose = require('mongoose');
-const Plants = require('./models/Plants.js');
 
 const corsOptions = {
     origin: function (origin, callback) {
@@ -17,25 +15,46 @@ const corsOptions = {
     }
   }
 
+/* == INTERNAL MODULES == */
+// this makes the server look into the routes folder, which then looks at the index.js file, which then tells the app to look at plants routes.js file which contains all the routes 
+const routes = require('./routes');
 
-//Middleware
-app.use(express.static('public'));
+
+/* == EXPRESS INSTANCE == */
+const app = express();
+
+
+/* == PORT == */
+const PORT = process.env.PORT||3000;
+
+
+/* == DB CONNECTION  == */
+require('./config/db.connection')
+
+
+/* == MIDDLEWARE  == */
+// Cors - a Node.js package that allows cross origin resource sharing.
+app.use(cors())
+// These 2 methods below allow us to process body data
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(express.static('public'));
 app.use(methodOverride('_method'));
 app.use(cors(corsOptions));
 
 
-//Routes
-const plantsRoutes = require('./routes');
 
-app.use('/plants', plantsRoutes.plants)
+const Plants = require('./models/Plant.js');
 
 
-app.get('/', (req, res) => {
-    res.send("Hello")
-});
+/* == ROUTES == */
+app.use('/plants', routes.plants)
+
+
+// app.get('/', (req, res) => {
+//     res.send("Hello")
+// });
 
 app.listen(PORT, () => {
-    console.log(`server running on port ${PORT} 🦹🏻‍♂️`)
+    console.log(`Server running on port ${PORT} 🍒🍒🍎🍉🍉`)
 });
