@@ -5,6 +5,10 @@ const express = require('express');
 const cors = require('cors');
 const methodOverride = require('method-override');
 
+
+
+//ADD DEPLOYED WEBSITE TO WHITELIST
+const whitelist = ['http://localhost:3000', ]
 const corsOptions = {
     origin: function (origin, callback) {
       if (whitelist.indexOf(origin) !== -1) {
@@ -40,7 +44,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
-app.use(cors(corsOptions));
 
 
 
@@ -48,7 +51,7 @@ const Plants = require('./models/Plant.js');
 
 
 /* == ROUTES == */
-app.use('/plants', routes.plants)
+app.use('/plants', routes.plants);
 
 
 // app.get('/', (req, res) => {

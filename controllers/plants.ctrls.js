@@ -16,12 +16,24 @@ const create = (req, res) => {
   db.Plant.create(req.body, (error, createdPlant) => {
     if (error) return res.status(400).json({ error: error.message });
 
-const create = (req, res) => {
-    db.Plant.create(req.body, (err, createdPlant) => {
-        if(err) return res.status(404).json({error: err.message})
-        return res.status(200).json(createdPlant)
-    })
-}
+    return res.status(200).json(createdPlant);
+  });
+};
+
+// Updating a single plant
+const update = (req, res) => {
+  db.Plant.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: req.body,
+    },
+    { new: true },
+    (err, updatedPlant) => {
+      if (err) return res.status(400).json({ error: err.message });
+      return res.status(200).json(updatedHoliday);
+    }
+  );
+};
 
 // Destroy a single plant by its ID
 const destroy = (req, res) => {
