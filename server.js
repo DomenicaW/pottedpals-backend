@@ -6,6 +6,19 @@ const cors = require('cors');
 const methodOverride = require('method-override');
 
 
+
+//ADD DEPLOYED WEBSITE TO WHITELIST
+const whitelist = ['http://localhost:3000', ]
+const corsOptions = {
+    origin: function (origin, callback) {
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    }
+  }
+
 /* == INTERNAL MODULES == */
 // this makes the server look into the routes folder, which then looks at the index.js file, which then tells the app to look at plants routes.js file which contains all the routes 
 const routes = require('./routes');
@@ -38,7 +51,7 @@ const Plants = require('./models/Plant.js');
 
 
 /* == ROUTES == */
-app.use('/plants', routes.plants)
+app.use('/plants', routes.plants);
 
 
 // app.get('/', (req, res) => {

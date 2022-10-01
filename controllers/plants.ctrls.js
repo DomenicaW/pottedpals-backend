@@ -16,7 +16,7 @@ const create = (req, res) => {
   db.Plant.create(req.body, (error, createdPlant) => {
     if (error) return res.status(400).json({ error: error.message });
 
-    return res.status(200).json(createdPlant); //  .json() will send proper headers in response so client knows it's json coming back
+    return res.status(200).json(createdPlant);
   });
 };
 
