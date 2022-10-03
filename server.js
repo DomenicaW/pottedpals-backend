@@ -4,6 +4,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const methodOverride = require('method-override');
+const mongoose = require ('mongoose');
 
 
 
@@ -34,6 +35,15 @@ const PORT = process.env.PORT||3000;
 
 /* == DB CONNECTION  == */
 require('./config/db.connection')
+
+
+const mongodbURI = process.env.MONGODBURI
+
+// Connect to Mongo
+mongoose.connect(mongodbURI ,  { useNewUrlParser: true, useUnifiedTopology: true})
+.then(() => console.log("Database Connected Successfully", mongodbURI))
+.catch(err => console.log(err))
+
 
 
 /* == MIDDLEWARE  == */
