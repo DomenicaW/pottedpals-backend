@@ -4,12 +4,21 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const methodOverride = require('method-override');
-const mongoose = require ('mongoose');
 
+/* == EXPRESS INSTANCE == */
+const app = express();
+
+
+/* == PORT == */
+const PORT = process.env.PORT||3000;
+
+
+/* == DB CONNECTION  == */
+require('./config/db.connection')
 
 
 //ADD DEPLOYED WEBSITE TO WHITELIST
-const whitelist = ['http://localhost:3000', ]
+const whitelist = ['http://localhost:3000', 'https://potted-pals-backend.herokuapp.com/' ]
 const corsOptions = {
     origin: function (origin, callback) {
       if (whitelist.indexOf(origin) !== -1) {
@@ -24,25 +33,14 @@ const corsOptions = {
 // this makes the server look into the routes folder, which then looks at the index.js file, which then tells the app to look at plants routes.js file which contains all the routes 
 const routes = require('./routes');
 
+let baseURL = "";
 
-/* == EXPRESS INSTANCE == */
-const app = express();
-
-
-/* == PORT == */
-const PORT = process.env.PORT||3000;
-
-
-/* == DB CONNECTION  == */
-require('./config/db.connection')
-
-
-const mongodbURI = process.env.MONGODBURI
-
-// Connect to Mongo
-mongoose.connect(mongodbURI ,  { useNewUrlParser: true, useUnifiedTopology: true})
-.then(() => console.log("Database Connected Successfully", mongodbURI))
-.catch(err => console.log(err))
+if (process.env.NODE_ENV === "development") {
+  baseURL = "http://localhost:3000";
+} else {
+  baseURL = "https://potted-pals-backend.herokuapp.com/";
+}
+console.log("current base url:", baseURL);
 
 
 
