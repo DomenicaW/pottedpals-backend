@@ -29,6 +29,8 @@ const corsOptions = {
     }
   }
 
+
+
 /* == INTERNAL MODULES == */
 // this makes the server look into the routes folder, which then looks at the index.js file, which then tells the app to look at plants routes.js file which contains all the routes 
 const routes = require('./routes');
