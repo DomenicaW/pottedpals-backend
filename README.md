@@ -1,3 +1,3 @@
 # Potted Pals Backend
 
-Test 4?? 
+Database for Potted Pals React App
