@@ -18,7 +18,7 @@ require('./config/db.connection')
 
 
 //ADD DEPLOYED WEBSITE TO WHITELIST
-const whitelist = ['http://localhost:3000', 'https://potted-pals-backend.herokuapp.com/', ]
+const whitelist = ['http://localhost:3000', 'https://potted-pals-backend.herokuapp.com/', `${process.env.FRONTEND_URL}` ]
 const corsOptions = {
     origin: function (origin, callback) {
       if (whitelist.indexOf(origin) !== -1) {
